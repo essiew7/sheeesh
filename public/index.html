@@ -1,0 +1,867 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>АвтоРазборка Пинск - Б/У запчасти</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #34495e;
+            --accent-color: #3498db;
+            --light-color: #ecf0f1;
+            --text-color: #333;
+            --light-text: #f8f9fa;
+            --border-color: #ddd;
+            --success-color: #27ae60;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        header {
+            background-color: var(--primary-color);
+            color: var(--light-text);
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo span {
+            color: var(--accent-color);
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 20px;
+        }
+        
+        .nav-links a {
+            color: var(--light-text);
+            text-decoration: none;
+            transition: color 0.3s;
+            font-weight: 500;
+        }
+        
+        .nav-links a:hover {
+            color: var(--accent-color);
+        }
+        
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+        }
+        
+        #app {
+            min-height: calc(100vh - 60px - 100px);
+        }
+        
+        .active {
+            border-bottom: 2px solid var(--accent-color);
+        }
+        
+        /* Homepage */
+        .hero {
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('/api/placeholder/1200/500') center/cover no-repeat;
+            color: white;
+            text-align: center;
+            padding: 100px 20px;
+        }
+        
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto 30px;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: var(--accent-color);
+            color: white;
+            padding: 10px 30px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        
+        .btn:hover {
+            background-color: #2980b9;
+        }
+        
+        .benefits {
+            padding: 60px 0;
+            background-color: white;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 2rem;
+            color: var(--primary-color);
+        }
+        
+        .benefits-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .benefit-card {
+            background-color: var(--light-color);
+            border-radius: 5px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        
+        .benefit-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .benefit-icon {
+            font-size: 40px;
+            color: var(--accent-color);
+            margin-bottom: 20px;
+        }
+        
+        .benefit-card h3 {
+            margin-bottom: 15px;
+            color: var(--primary-color);
+        }
+        
+        /* Car Catalog */
+        .catalog {
+            padding: 60px 0;
+            background-color: var(--light-color);
+        }
+        
+        .cars-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+        }
+        
+        .car-card {
+            background-color: white;
+            border-radius: 5px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        
+        .car-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .car-img {
+            height: 200px;
+            width: 100%;
+            object-fit: cover;
+        }
+        
+        .car-info {
+            padding: 20px;
+        }
+        
+        .car-info h3 {
+            margin-bottom: 10px;
+            color: var(--primary-color);
+        }
+        
+        .car-specs {
+            color: #666;
+            margin-bottom: 15px;
+        }
+        
+        /* Parts Search */
+        .search-section {
+            padding: 60px 0;
+            background-color: white;
+        }
+        
+        .search-form {
+            background-color: var(--light-color);
+            padding: 30px;
+            border-radius: 5px;
+            margin-bottom: 40px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        
+        .search-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+        
+        .search-btn {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 16px;
+            transition: background-color 0.3s;
+            width: 100%;
+            margin-top: 20px;
+        }
+        
+        .search-btn:hover {
+            background-color: #2980b9;
+        }
+        
+        .parts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+        }
+        
+        .part-card {
+            background-color: var(--light-color);
+            border-radius: 5px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+        
+        .part-img {
+            height: 200px;
+            width: 100%;
+            object-fit: cover;
+        }
+        
+        .part-info {
+            padding: 20px;
+        }
+        
+        .part-info h3 {
+            margin-bottom: 10px;
+            color: var(--primary-color);
+        }
+        
+        .part-specs {
+            color: #666;
+            margin-bottom: 15px;
+        }
+        
+        .part-price {
+            color: var(--success-color);
+            font-weight: bold;
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+        }
+        
+        /* Contacts */
+        .contacts {
+            padding: 60px 0;
+            background-color: var(--light-color);
+        }
+        
+        .contacts-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .contact-info {
+            background-color: white;
+            padding: 30px;
+            border-radius: 5px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+        
+        .contact-info h3 {
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+        }
+        
+        .contact-detail {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .contact-icon {
+            color: var(--accent-color);
+            font-size: 20px;
+            margin-right: 15px;
+            width: 20px;
+        }
+        
+        .map-container {
+            height: 400px;
+            border-radius: 5px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--primary-color);
+            color: var(--light-text);
+            padding: 40px 0 20px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin-bottom: 20px;
+        }
+        
+        .footer-section h3 {
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-links a {
+            color: var(--light-text);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: var(--accent-color);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 60px;
+                left: 0;
+                right: 0;
+                background-color: var(--primary-color);
+                padding: 20px;
+            }
+            
+            .nav-links li {
+                margin: 10px 0;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .search-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container navbar">
+            <div class="logo">
+                <div>Авто<span>Разборка</span> Пинск</div>
+            </div>
+            <button class="mobile-menu-btn">☰</button>
+            <ul class="nav-links">
+                <li><a href="#home" class="active">Главная</a></li>
+                <li><a href="#catalog">Каталог авто</a></li>
+                <li><a href="#search">Поиск запчастей</a></li>
+                <li><a href="#contacts">Контакты</a></li>
+            </ul>
+        </div>
+    </header>
+    
+    <div id="app">
+        <!-- Home section -->
+        <section id="home" class="home">
+            <div class="hero">
+                <div class="container">
+                    <h1>Качественные б/у автозапчасти в Пинске</h1>
+                    <p>Огромный выбор оригинальных запчастей от европейских, японских и американских автомобилей по доступным ценам</p>
+                    <a href="#search" class="btn">Найти запчасть</a>
+                </div>
+            </div>
+            
+            <div class="benefits">
+                <div class="container">
+                    <h2 class="section-title">Почему выбирают нас</h2>
+                    <div class="benefits-container">
+                        <div class="benefit-card">
+                            <div class="benefit-icon">🔍</div>
+                            <h3>Широкий ассортимент</h3>
+                            <p>Более 10,000 запчастей на складе для различных марок и моделей автомобилей</p>
+                        </div>
+                        <div class="benefit-card">
+                            <div class="benefit-icon">💰</div>
+                            <h3>Доступные цены</h3>
+                            <p>Экономия до 70% по сравнению с новыми оригинальными запчастями</p>
+                        </div>
+                        <div class="benefit-card">
+                            <div class="benefit-icon">✅</div>
+                            <h3>Гарантия качества</h3>
+                            <p>Все запчасти проходят проверку специалистами перед продажей</p>
+                        </div>
+                        <div class="benefit-card">
+                            <div class="benefit-icon">🚚</div>
+                            <h3>Быстрая доставка</h3>
+                            <p>Доставка по городу и всей Беларуси в кратчайшие сроки</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Car Catalog section -->
+        <section id="catalog" class="catalog">
+            <div class="container">
+                <h2 class="section-title">Каталог разобранных автомобилей</h2>
+                <div class="cars-grid">
+                    <div class="car-card">
+                        <img src="/api/placeholder/300/200" alt="Volkswagen Passat B6" class="car-img">
+                        <div class="car-info">
+                            <h3>Volkswagen Passat B6</h3>
+                            <div class="car-specs">
+                                <p>Год: 2008</p>
+                                <p>Двигатель: 2.0 TDI (140 л.с.)</p>
+                                <p>КПП: Механическая</p>
+                            </div>
+                            <a href="#search" class="btn">Найти запчасти</a>
+                        </div>
+                    </div>
+                    <div class="car-card">
+                        <img src="/api/placeholder/300/200" alt="Audi A6 C6" class="car-img">
+                        <div class="car-info">
+                            <h3>Audi A6 C6</h3>
+                            <div class="car-specs">
+                                <p>Год: 2007</p>
+                                <p>Двигатель: 3.0 TDI (233 л.с.)</p>
+                                <p>КПП: Автоматическая</p>
+                            </div>
+                            <a href="#search" class="btn">Найти запчасти</a>
+                        </div>
+                    </div>
+                    <div class="car-card">
+                        <img src="/api/placeholder/300/200" alt="BMW 5 E60" class="car-img">
+                        <div class="car-info">
+                            <h3>BMW 5 E60</h3>
+                            <div class="car-specs">
+                                <p>Год: 2006</p>
+                                <p>Двигатель: 2.5i (218 л.с.)</p>
+                                <p>КПП: Автоматическая</p>
+                            </div>
+                            <a href="#search" class="btn">Найти запчасти</a>
+                        </div>
+                    </div>
+                    <div class="car-card">
+                        <img src="/api/placeholder/300/200" alt="Mercedes-Benz E-Class W211" class="car-img">
+                        <div class="car-info">
+                            <h3>Mercedes-Benz E-Class W211</h3>
+                            <div class="car-specs">
+                                <p>Год: 2009</p>
+                                <p>Двигатель: 3.0 CDI (224 л.с.)</p>
+                                <p>КПП: Автоматическая</p>
+                            </div>
+                            <a href="#search" class="btn">Найти запчасти</a>
+                        </div>
+                    </div>
+                    <div class="car-card">
+                        <img src="/api/placeholder/300/200" alt="Toyota Camry V40" class="car-img">
+                        <div class="car-info">
+                            <h3>Toyota Camry V40</h3>
+                            <div class="car-specs">
+                                <p>Год: 2008</p>
+                                <p>Двигатель: 2.4 (167 л.с.)</p>
+                                <p>КПП: Автоматическая</p>
+                            </div>
+                            <a href="#search" class="btn">Найти запчасти</a>
+                        </div>
+                    </div>
+                    <div class="car-card">
+                        <img src="/api/placeholder/300/200" alt="Skoda Octavia A5" class="car-img">
+                        <div class="car-info">
+                            <h3>Skoda Octavia A5</h3>
+                            <div class="car-specs">
+                                <p>Год: 2010</p>
+                                <p>Двигатель: 1.8 TSI (160 л.с.)</p>
+                                <p>КПП: DSG</p>
+                            </div>
+                            <a href="#search" class="btn">Найти запчасти</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Parts Search section -->
+        <section id="search" class="search-section">
+            <div class="container">
+                <h2 class="section-title">Поиск запчастей</h2>
+                <div class="search-form">
+                    <div class="search-grid">
+                        <div class="form-group">
+                            <label for="brand">Марка автомобиля</label>
+                            <select id="brand">
+                                <option value="">Выберите марку</option>
+                                <option value="volkswagen">Volkswagen</option>
+                                <option value="audi">Audi</option>
+                                <option value="bmw">BMW</option>
+                                <option value="mercedes-benz">Mercedes-Benz</option>
+                                <option value="toyota">Toyota</option>
+                                <option value="skoda">Skoda</option>
+                                <option value="ford">Ford</option>
+                                <option value="opel">Opel</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="model">Модель</label>
+                            <select id="model" disabled>
+                                <option value="">Сначала выберите марку</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="year">Год выпуска</label>
+                            <select id="year">
+                                <option value="">Любой</option>
+                                <option value="2015">2015+</option>
+                                <option value="2010">2010-2014</option>
+                                <option value="2005">2005-2009</option>
+                                <option value="2000">2000-2004</option>
+                                <option value="1995">1995-1999</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="part">Название запчасти</label>
+                        <input type="text" id="part" placeholder="Например: фара, бампер, двигатель...">
+                    </div>
+                    <button class="search-btn">Найти запчасти</button>
+                </div>
+                
+                <div class="parts-grid">
+                    <div class="part-card">
+                        <img src="/api/placeholder/300/200" alt="Фара Volkswagen Passat B6" class="part-img">
+                        <div class="part-info">
+                            <h3>Фара передняя левая</h3>
+                            <div class="part-specs">
+                                <p>Автомобиль: Volkswagen Passat B6 2008</p>
+                                <p>Состояние: Отличное</p>
+                                <p>Артикул: VW-PB6-HL-L-08</p>
+                            </div>
+                            <div class="part-price">180 BYN</div>
+                            <a href="tel:+375445003201" class="btn">Заказать</a>
+                        </div>
+                    </div>
+                    <div class="part-card">
+                        <img src="/api/placeholder/300/200" alt="Дверь BMW 5 E60" class="part-img">
+                        <div class="part-info">
+                            <h3>Дверь передняя правая</h3>
+                            <div class="part-specs">
+                                <p>Автомобиль: BMW 5 E60 2006</p>
+                                <p>Состояние: Хорошее</p>
+                                <p>Артикул: BMW-E60-DRF-R-06</p>
+                            </div>
+                            <div class="part-price">350 BYN</div>
+                            <a href="tel:+375445003201" class="btn">Заказать</a>
+                        </div>
+                    </div>
+                    <div class="part-card">
+                        <img src="/api/placeholder/300/200" alt="Двигатель Audi A6 C6" class="part-img">
+                        <div class="part-info">
+                            <h3>Двигатель 3.0 TDI</h3>
+                            <div class="part-specs">
+                                <p>Автомобиль: Audi A6 C6 2007</p>
+                                <p>Состояние: Отличное</p>
+                                <p>Пробег: 180,000 км</p>
+                                <p>Артикул: AUD-A6C6-ENG-30TDI-07</p>
+                            </div>
+                            <div class="part-price">2800 BYN</div>
+                            <a href="tel:+375445003201" class="btn">Заказать</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Contacts section -->
+        <section id="contacts" class="contacts">
+            <div class="container">
+                <h2 class="section-title">Контакты</h2>
+                <div class="contacts-container">
+                    <div class="contact-info">
+                        <h3>Связаться с нами</h3>
+                        <div class="contact-detail">
+                            <div class="contact-icon">📱</div>
+                            <div>
+                                <strong>Телефон:</strong>
+                                <a href="tel:+375445003201">+375 (44) 500-32-01</a>
+                            </div>
+                        </div>
+                        <div class="contact-detail">
+                            <div class="contact-icon">📍</div>
+                            <div>
+                                <strong>Адрес:</strong>
+                                <p>ул. Советская 37, Пинск, Беларусь</p>
+                            </div>
+                        </div>
+                        <div class="contact-detail">
+                            <div class="contact-icon">🕒</div>
+                            <div>
+                                <strong>Режим работы:</strong>
+                                <p>Пн-Пт: 9:00 - 18:00</p>
+                                <p>Сб: 9:00 - 15:00</p>
+                                <p>Вс: Выходной</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="map-container">
+                        <!-- Здесь будет карта -->
+                        <div style="background-color: #e9ecef; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;">
+                            <p style="font-size: 18px; color: #6c757d;">Карта с местоположением магазина</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>АвтоРазборка Пинск</h3>
+                    <p>Качественные б/у автозапчасти для иномарок по доступным ценам</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Навигация</h3>
+                    <ul class="footer-links">
+                        <li><a href="#home">Главная</a></li>
+                        <li><a href="#catalog">Каталог авто</a></li>
+                        <li><a href="#search">Поиск запчастей</a></li>
+                        <li><a href="#contacts">Контакты</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Контакты</h3>
+                    <ul class="footer-links">
+                        <li>📱 +375 (44) 500-32-01</li>
+                        <li>📍 ул. Советская 37, Пинск</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 АвтоРазборка Пинск. Все права защищены.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <script>
+        // Базовый JavaScript-код для функциональности сайта
+        document.addEventListener('DOMContentLoaded', function() {
+            // Мобильное меню
+            const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+            const navLinks = document.querySelector('.nav-links');
+            
+            mobileMenuBtn.addEventListener('click', function() {
+                navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
+            });
+            
+            // Плавная прокрутка
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 60,
+                            behavior: 'smooth'
+                        });
+                        
+                        // Обновление активной ссылки
+                        document.querySelectorAll('.nav-links a').forEach(link => {
+                            link.classList.remove('active');
+                        });
+                        this.classList.add('active');
+                        
+                        // Закрытие мобильного меню после клика
+                        if (window.innerWidth <= 768) {
+                            navLinks.style.display = 'none';
+                        }
+                    }
+                });
+            });
+            
+            // Динамическое изменение моделей в зависимости от выбранной марки
+            const brandSelect = document.getElementById('brand');
+            const modelSelect = document.getElementById('model');
+            
+            const carModels = {
+                'volkswagen': ['Passat B5', 'Passat B6', 'Passat B7', 'Golf 4', 'Golf 5', 'Golf 6', 'Tiguan', 'Touareg'],
+                'audi': ['A4 B6', 'A4 B7', 'A4 B8', 'A6 C5', 'A6 C6', 'A6 C7', 'A8', 'Q5', 'Q7'],
+                'bmw': ['3 E46', '3 E90', '5 E39', '5 E60', '7 E38', '7 E65', 'X5 E53', 'X5 E70', 'X6'],
+                'mercedes-benz': ['C-Class W203', 'C-Class W204', 'E-Class W210', 'E-Class W211', 'E-Class W212', 'S-Class W220', 'ML W163', 'ML W164'],
+                'toyota': ['Camry V40', 'Camry V50', 'Corolla E120', 'Corolla E150', 'RAV4', 'Land Cruiser 100', 'Land Cruiser 200', 'Prius'],
+                'skoda': ['Octavia A5', 'Octavia A7', 'Superb', 'Fabia', 'Kodiaq', 'Yeti'],
+                'ford': ['Focus 2', 'Focus 3', 'Mondeo 3', 'Mondeo 4', 'Fusion', 'Kuga', 'Transit'],
+                'opel': ['Astra G', 'Astra H', 'Astra J', 'Vectra B', 'Vectra C', 'Insignia', 'Zafira']
+            };
+            
+            brandSelect.addEventListener('change', function() {
+                const selectedBrand = this.value;
+                
+                // Очищаем текущие опции
+                modelSelect.innerHTML = '';
+                
+                if (selectedBrand) {
+                    // Добавляем начальную опцию
+                    const defaultOption = document.createElement('option');
+                    defaultOption.value = '';
+                    defaultOption.textContent = 'Выберите модель';
+                    modelSelect.appendChild(defaultOption);
+                    
+                    // Добавляем модели для выбранной марки
+                    carModels[selectedBrand].forEach(model => {
+                        const option = document.createElement('option');
+                        option.value = model.toLowerCase().replace(' ', '-');
+                        option.textContent = model;
+                        modelSelect.appendChild(option);
+                    });
+                    
+                    modelSelect.disabled = false;
+                } else {
+                    const option = document.createElement('option');
+                    option.value = '';
+                    option.textContent = 'Сначала выберите марку';
+                    modelSelect.appendChild(option);
+                    modelSelect.disabled = true;
+                }
+            });
+            
+            // Обработка поиска запчастей
+            const searchBtn = document.querySelector('.search-btn');
+            const partsGrid = document.querySelector('.parts-grid');
+            
+            searchBtn.addEventListener('click', function() {
+                // В реальном проекте здесь будет запрос к API
+                // А пока просто эмулируем поиск с задержкой
+                searchBtn.textContent = 'Поиск...';
+                searchBtn.disabled = true;
+                
+                setTimeout(() => {
+                    // Сбрасываем состояние кнопки
+                    searchBtn.textContent = 'Найти запчасти';
+                    searchBtn.disabled = false;
+                    
+                    // Эмулируем отображение результатов
+                    const brand = brandSelect.value;
+                    const part = document.getElementById('part').value;
+                    
+                    if (brand || part) {
+                        // В реальности здесь был бы запрос к серверу и отображение результатов
+                        alert('Функция поиска запчастей будет работать после интеграции с сервером');
+                    } else {
+                        alert('Пожалуйста, укажите хотя бы марку автомобиля или название запчасти');
+                    }
+                }, 1000);
+            });
+            
+            // Имитация подсвечивания активного раздела при прокрутке
+            const sections = document.querySelectorAll('section');
+            const navItems = document.querySelectorAll('.nav-links a');
+            
+            window.addEventListener('scroll', function() {
+                let current = '';
+                
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop - 100;
+                    const sectionHeight = section.clientHeight;
+                    if (pageYOffset >= sectionTop) {
+                        current = section.getAttribute('id');
+                    }
+                });
+                
+                navItems.forEach(item => {
+                    item.classList.remove('active');
+                    if (item.getAttribute('href') === `#${current}`) {
+                        item.classList.add('active');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
